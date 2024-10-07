@@ -1,48 +1,56 @@
-import { useState } from "react";
-import TodoTable from "./TodoTable";
+import { useState } from 'react';
+import TodoTable from './TodoTable';
 
 function TodoList() {
-
-    const [formData, setFormData] = useState({
-        desc: "",
-        date: ""
+    const [todo, setTodo] = useState({
+        description: "",
+        date: "",
     });
+
     const [todos, setTodos] = useState([]);
 
-    const handleChange = (event) => {
-        const { id, value } = event.target;
-        setFormData((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
+    const handleInput = (event) => {
+        setTodo({ ...todo, [event.target.name]: event.target.value });
     };
 
-    const addTodo = (event) => {
-        event.preventDefault();
-        setTodos([...todos, formData]);
-        setFormData({
-            desc: "",
-            date: ""
+    const addTodo = () => {
+        if (!todo.description || !todo.date) {
+            alert("All fields are required!");
+            return;
+        }
+
+        setTodos([...todos, todo]);
+        setTodo({
+            date: "",
+            description: "",
         });
     };
 
-    const deleteTodo = (itemToDelete) => {
-        setTodos(todos.filter((todo, i) => i !== itemToDelete));
+    const deleteTodo = (todoToDelete) => {
+        const updatedTodos = todos.filter((todo) => todo !== todoToDelete);
+        setTodos(updatedTodos);
     };
 
     return (
         <>
-            <h1>Simple Todolist</h1>
-            <form>
-                <label for="desc">Description:</label>
-                <input type="text" id="desc" name="desc" placeholder="Description" onChange={handleChange} value={formData.desc} />
-                <label for="text">Date:</label>
-                <input type="text" id="date" name="date" placeholder="Date" onChange={handleChange} value={formData.date} />
-                <button onClick={addTodo}>Add</button>
-            </form>
-            <TodoTable todos={todos} deleteTodo={deleteTodo}/>
+            <input
+                type="text"
+                name="description"
+                onChange={handleInput}
+                value={todo.description}
+                placeholder="Buy coffee"
+            />
+            <input
+                type="text"
+                name="date"
+                onChange={handleInput}
+                value={todo.date}
+                placeholder="25.05.2025"
+            />
+            <button onClick={addTodo}>Add</button>
+            <TodoTable todos={todos} deleteTodo={deleteTodo} />
         </>
-    );s
-}
+    );
+};
 
 export default TodoList;

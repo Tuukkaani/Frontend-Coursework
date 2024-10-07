@@ -1,22 +1,28 @@
-import React from "react";
+import React from 'react';
 
 function TodoTable({ todos, deleteTodo }) {
     return (
-        <table>
-            <tbody>
-                <tr>
-                    <th>Description</th>
-                    <th>Date</th>
-                </tr>
-                {todos.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.desc}</td>
-                        <td>{item.date}</td>
-                        <td><button onClick={() => deleteTodo(index)}>Delete</button></td>
+        <>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {
+                        todos.map(todo =>
+                            <tr key={todo}>
+                                <td>{todo.description}</td>
+                                <td>{todo.date}</td>
+                                <td><button onClick={() => deleteTodo(todo)}>Delete</button></td>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
+        </>
     );
 }
 
