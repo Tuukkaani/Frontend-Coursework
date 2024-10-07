@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+</head>
+
+<body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React component code -->
+    <script type="text/babel">
+
+        const App = () => {
+
+            const [question, setQuestion] = React.useState("");
+            const [correctAnswer, setCorrectAnswer] = React.useState("");
+            const [answerVisibility, setAnswerVisibility]  = React.useState(false);
+            const [responseCode, setResponseCode] = React.useState();
+            
+            const FetchQuestion = () => {
+                fetch('https://opentdb.com/api.php?amount=1')
+                .then(response => response.json())
+                .then(data => {
+                    setAnswerVisibility(false);
+
+                    if (data.response_code == 0) {
+                        setResponseCode(0);
+                        
+                        setQuestion(data.results[0].question);
+                        setCorrectAnswer(data.results[0].correct_answer)
+                    } else if (data.response_code == 5) {
+                        setResponseCode(5);
+                    }
+
+                    })
+                .catch(err => {
+
+                });
+            };
+
+            const showAnswer = () => {
+                setAnswerVisibility(true)
+            };
+
+            const QuestionText = () => {
+                if (responseCode == 0) {
+                    return <p>{question}</p>
+                } else if (responseCode == 5) {
+                    return <p>Too many requests! Wait 5 seconds...</p>
+                }
+            };
+
+            const AnswerText = () => {
+                if (answerVisibility) return <p>{correctAnswer}</p>
+                else return <p></p>
+            };
+
+            return (
+                <div>
+                    <QuestionText/>
+                    <button onClick={FetchQuestion}>New Question</button>
+                    <button onClick={showAnswer}>Show Answer</button>
+                    <AnswerText/>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+
+    </script>
+</body>
+
+</html>
