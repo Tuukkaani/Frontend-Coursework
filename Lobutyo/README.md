@@ -1,8 +1,8 @@
-# React + Vite
+# Personal Trainer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### How to use
+1. git clone https://github.com/Tuukkaani/Frontend-Coursework.git
 
-Currently, two official plugins are available:
+2. navigate to ./Lobutyo & npm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. npm run dev
