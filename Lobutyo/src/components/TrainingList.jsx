@@ -9,8 +9,8 @@ function TrainingList() {
 
     const fetchData = () => {
         fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/gettrainings')
-        .then(response => response.json())
-        .then(data => setTrainingSessions(data))
+            .then(response => response.json())
+            .then(data => setTrainingSessions(data))
     }
 
     const formatDate = (date) => {
@@ -18,14 +18,15 @@ function TrainingList() {
     };
 
     const columns = [
-        { 
-            title: "Date", 
+        {
+            title: "Date",
             field: "date",
             render: rowData => formatDate(rowData.date),
         },
-        { title: "Duration (min)", field: "duration" }, 
+        { title: "Duration (min)", field: "duration" },
         { title: "Activity", field: "activity" },
-        { title: "Customer", field: "customer",
+        {
+            title: "Customer", field: "customer",
             render: rowData => (
                 rowData.customer ? `${rowData.customer.firstname} ${rowData.customer.lastname}` : 'N/A'
             ),
@@ -39,10 +40,10 @@ function TrainingList() {
                 columns={columns}
                 data={trainingSessions}
                 options={{
-                    search: true, 
-                    paging: true,  
-                    sorting: true,  
-                    filtering: false, 
+                    search: true,
+                    paging: true,
+                    sorting: true,
+                    filtering: false,
                 }}
             />
         </div>
